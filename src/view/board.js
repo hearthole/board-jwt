@@ -10,11 +10,11 @@ function BoardPage(props) {
     dispatch(getBoard()).then((res) => {
       console.log(movies);
     });
-  }, [dispatch, movies]);
+  }, []);
 
   return (
-    <div className="login">
-      <table className="type01">
+    <div className='login'>
+      <table className='type01'>
         <tbody>
           <tr>
             <th>id</th>

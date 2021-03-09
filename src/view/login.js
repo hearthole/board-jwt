@@ -23,7 +23,7 @@ function LoginPage(props) {
     dispatch(loginUser(body))
       .then((res) => {
         console.log(res);
-        if (res.payload && 'ok' === res.payload.msg) {
+        if (res.payload === true) {
           props.history.push('/board');
         } else {
           alert('오류발생');
@@ -35,17 +35,17 @@ function LoginPage(props) {
   };
 
   return (
-    <div className="login">
+    <div className='login'>
       <form
         onSubmit={onSubmitHandler}
         style={{ display: 'flex', flexDirection: 'column' }}
       >
         <label>ID</label>
-        <input type="id" value={id} onChange={onIdHandler} />
+        <input type='id' value={id} onChange={onIdHandler} />
         <label>Password</label>
-        <input type="password" value={pass} onChange={onPassHanlder} />
+        <input type='password' value={pass} onChange={onPassHanlder} />
         <br />
-        <button type="submit">Login</button>
+        <button type='submit'>Login</button>
       </form>
     </div>
   );
