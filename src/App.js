@@ -5,6 +5,7 @@ import Header from './component/header';
 import Home from './view/home';
 import Login from './view/login';
 import Board from './view/board';
+import Auth from './hoc/auth';
 
 function App() {
   return (
@@ -14,9 +15,9 @@ function App() {
       </div>
       <div>
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/board" component={Board} />
+          <Route exact path="/" component={Auth(Home, false)} />
+          <Route exact path="/login" component={Auth(Login, false)} />
+          <Route exact path="/board" component={Auth(Board, true)} />
         </Switch>
       </div>
     </Router>

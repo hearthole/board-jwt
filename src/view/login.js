@@ -1,51 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { loginUser } from '../_actions/userAction';
 function LoginPage(props) {
-  const [id, setId] = useState('');
-  const [pass, setPass] = useState('');
+  const [body, setBody] = useState({ uid: '', pass: '' });
+  const isLogin = useSelector((state) => state.user.isLogin);
   const dispatch = useDispatch();
 
   const onIdHandler = (e) => {
-    setId(e.currentTarget.value);
+    setBody({ ...body, uid: e.currentTarget.value });
   };
   const onPassHanlder = (e) => {
-    setPass(e.currentTarget.value);
+    setBody({ ...body, pass: e.currentTarget.value });
   };
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    const body = {
-      uid: id,
-      pass: pass,
-    };
-
-    dispatch(loginUser(body))
-      .then((res) => {
-        console.log(res);
-        if (res.payload === true) {
-          props.history.push('/board');
-        } else {
-          alert('오류발생');
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    dispatch(loginUser(body));
   };
 
+  useEffect(() => {
+    if (isLogin) {
+      props.history.push('/board');
+    }
+  }, [isLogin]);
+
   return (
-    <div className='login'>
+    <div className="login">
       <form
         onSubmit={onSubmitHandler}
         style={{ display: 'flex', flexDirection: 'column' }}
       >
         <label>ID</label>
-        <input type='id' value={id} onChange={onIdHandler} />
+        <input type="id" value={body.uid} onChange={onIdHandler} />
         <label>Password</label>
-        <input type='password' value={pass} onChange={onPassHanlder} />
+        <input type="password" value={body.pass} onChange={onPassHanlder} />
         <br />
-        <button type='submit'>Login</button>
+        <button type="submit">Login</button>
       </form>
     </div>
   );
